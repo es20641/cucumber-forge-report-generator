@@ -1,15 +1,56 @@
 @import url('https://fonts.googleapis.com/css?family=Lato|Roboto+Mono|Roboto+Slab');
 
+/* Custom CSS Properties for Light/Dark switching */
+:root {
+  --color-body-bg: #fcfcfc;
+  --color-body-fg: #272525;
+  --color-sidenav-bg: #272525;
+  --color-sidenav-fg: #f1f1f1;
+  --color-sidenav-title-bg: #2980B9;
+  --color-sidenav-header-fg: #3a7ca8;
+  --color-feature-button-fg: #d9d9d9;
+  --color-feature-button-bg: #404040;
+  --color-feature-button-active-fg: #404040;
+  --color-feature-button-active-bg: #fcfcfc;
+  --color-feature-button-active-border: #c9c9c9;
+  --color-scenario-button-bg: #e2e2e2;
+  --color-scenario-button-fg: #404040;
+  --color-scenario-button-border-right: #c9c9c9;
+  --color-scenario-button-active-bg: #ccc;
+  --color-scenario-divider-border-bottom: #ccc;
+}
+[data-theme="dark"] {
+  --color-body-bg: #212224;
+  --color-body-fg: #d9d9d9;
+  --color-sidenav-bg: #252628;
+  --color-sidenav-fg: #f1f1f1;
+  --color-sidenav-title-bg: #2980B9;
+  --color-sidenav-header-fg: #3a7ca8;
+  --color-feature-button-fg: #d9d9d9;
+  --color-feature-button-bg: #3C4043;
+  --color-feature-button-active-fg: #fcfcfc;
+  --color-feature-button-active-bg: #3C4043;
+  --color-feature-button-active-border: #212224;
+  --color-scenario-button-bg: #212224;
+  --color-scenario-button-fg: #d9d9d9;
+  --color-scenario-button-border-right: #212224;
+  --color-scenario-button-active-bg: #3C4043;
+  --color-scenario-divider-border-bottom: #212224;
+}
+
 html {
   scroll-behavior: smooth;
   font-family: "Lato","proxima-nova","Helvetica Neue",Arial,sans-serif;
   font-weight: normal;
   font-style: normal;
   font-size: medium;
+  background-color: var(--color-body-bg);
+  color: var(--color-body-fg);
 }
 body {
   margin: 0px;
-  background-color: #fcfcfc;
+  background-color: var(--color-body-bg);
+  color: var(--color-body-fg);
 }
 pre {
   overflow: visible;
@@ -39,9 +80,9 @@ table, th, td {
   height: 100%;
   position: fixed;
   z-index: 1;
-  background-color: #272525;
+  background-color: var(--color-sidenav-bg);
   overflow-x: hidden;
-  color: #f1f1f1;
+  color: var(--color-sidenav-fg);
   text-align: center;
   /* Disable the scroll bar */
   scrollbar-width: none; /* Firefox */
@@ -55,7 +96,7 @@ table, th, td {
   min-height: calc(100% - 2.5em);
 }
 #sidenavTitle {
-  background-color: #2980B9;
+  background-color: var(--color-sidenav-title-bg);
   padding: 1em 0.01em 1em 0.01em;
 }
 #sidenavTitle h1 {
@@ -65,19 +106,18 @@ table, th, td {
   margin: 0em;
 }
 .sidenav-header {
-  color: #3a7ca8;
+  color: var(--color-sidenav-header-fg);
   margin: 0.5em;
   font-weight: bold;
   line-height: 1.5em;
 }
 #sidenavFooter {
-  position: absolute;
   width: 100%;
 }
 .feature-button {
   font-family: "Lato","proxima-nova","Helvetica Neue",Arial,sans-serif;
-  background-color: #404040;
-  color: #d9d9d9;
+  background-color: var(--color-feature-button-bg);
+  color: var(--color-feature-button-fg);
   cursor: pointer;
   padding: 0.75em;
   width: 100%;
@@ -87,10 +127,10 @@ table, th, td {
   white-space: nowrap;
 }
 .feature-button.active, .feature-button:hover {
-  background-color: #fcfcfc;
+  background-color: var(--color-feature-button-active-bg);
   font-weight: bold;
-  color: #404040;
-  border-bottom: solid 1px #c9c9c9;
+  color: var(--color-feature-button-active-fg);
+  border-bottom: solid 1px var(--color-feature-button-active-border);
 }
 .panel {
   max-height: 0;
@@ -99,8 +139,8 @@ table, th, td {
 }
 .scenario-button {
   font-family: "Lato","proxima-nova","Helvetica Neue",Arial,sans-serif;
-  background-color: #e2e2e2;
-  color: #404040;
+  background-color: var(--color-scenario-button-bg);
+  color: var(--color-scenario-button-fg);
   cursor: pointer;
   padding: 0.5em;
   width: 100%;
@@ -110,20 +150,81 @@ table, th, td {
   border-top: none;
   border-left: none;
   border-bottom: none;
-  border-right: solid 1px #c9c9c9;
+  border-right: solid 1px var(--color-scenario-button-border-right);
 }
 .scenario-button.active, .scenario-button:hover {
-  background-color: #ccc;
+  background-color: var(--color-scenario-button-active-bg);
 }
 .scenario-button span {
   margin-left: 1em;
 }
 
+/* Dark mode slider */
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 16px;
+}
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+/* Dark theme slider slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 13px;
+  width: 13px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+input:checked + .slider {
+  background-color: #2980B9;
+}
+input:focus + .slider {
+  box-shadow: 0 0 1px #2980B9;
+}
+input:checked + .slider:before {
+  -webkit-transform: translateX(13px);
+  -ms-transform: translateX(13px);
+  transform: translateX(13px);
+}
+/* Rounded sliders */
+.slider.round {
+  border-radius: 16px;
+}
+.slider.round:before {
+  border-radius: 50%;
+} 
+
 /* Main Content Window Style */
 .main {
+  position: absolute;
+  min-width: 70vw;
+  min-height: 100%;
   margin-left: 30vw;
-  margin-bottom: 75vh;
+  /*margin-bottom: 75vh;*/
   padding: 0px 10px;
+  background-color: var(--color-body-bg);
+  color: var(--color-body-fg);
 }
 .main h2 {
   padding-top: 0.5em;

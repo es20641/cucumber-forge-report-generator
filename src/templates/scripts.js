@@ -88,6 +88,27 @@ const toggleDisplayedFeature = (element) => {
   });
 };
 
+const initTheme = (element) => {
+  var darkThemeSelected = (document.getElementById('themeSwitch') != null && document.getElementById('themeSwitch') === 'dark');
+  // Update checkbox
+  themeSwitch.checked = darkThemeSelected;
+  // Update the data-theme attribute
+  //darkThemeSelected ? document.body.setAttribute('data-theme', 'dark') : document.body.removeAttribute('data-theme');
+  darkThemeSelected ? document.head.setAttribute('data-theme', 'dark') : document.head.removeAttribute('data-theme');
+};
+
+const toggleTheme = (element) => {
+  if(themeSwitch.checked) {
+    // Dark theme has been selected
+    document.body.setAttribute('data-theme', 'dark');
+    // document.setItem('themeSwitch', 'dark');
+  } else {
+    // Dark theme has not been selected
+    document.body.removeAttribute('data-theme');
+    // document.removeItem('themeSwitch');
+  }
+}
+
 const init = () => {
   // Add listeners for feature buttons
   Array.from(document.getElementsByClassName('feature-button')).forEach((featureButton) => {
@@ -105,6 +126,15 @@ const init = () => {
       scrollTo(this);
     });
   });
+
+  // Add listeners for theme switch button
+  var themeSwitch = document.getElementById('themeSwitch');
+  if(themeSwitch) {
+    initTheme();
+    themeSwitch.addEventListener('change', function change() {
+      toggleTheme(this);
+    });
+  }
 
   // Make sure the right scenario is active when scrolling
   window.addEventListener('scroll', updateActiveScenarioWhenScrolling, true);
