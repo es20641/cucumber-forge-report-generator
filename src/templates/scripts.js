@@ -96,6 +96,51 @@ const toggleDisplayedFeature = (element) => {
   });
 };
 
+const toggleTheme = (element) => {
+  console.log("toggleTheme");
+  var darkThemeEnabled = document.body.getAttribute('data-theme') === 'dark';
+  console.log(darkThemeEnabled)
+  if(darkThemeEnabled) {
+    // Disable the dark theme
+    document.body.removeAttribute('data-theme');
+  } else {
+    // Enabled the dark theme
+    document.body.setAttribute('data-theme', 'dark');
+  }
+}
+
+/*
+ * Initialization for settings menu. Sets up event handlers for opening /
+ * closing the menu and alternating the icons.
+ */
+const initSettingsMenu = () => {
+  const gear = document.getElementById('gear');
+  if (gear) {
+    gear.addEventListener('click', function toggle() {
+      document.getElementById('cross').style.display = 'block';
+      document.getElementById('menu-list').style.visibility = 'visible';
+      this.style.display = 'none';
+    });
+  }
+
+  const cross = document.getElementById('cross');
+  if (cross) {
+    cross.addEventListener('click', function click() {
+      document.getElementById('gear').style.display = 'block';
+      document.getElementById('menu-list').style.visibility = 'hidden';
+      this.style.display = 'none';
+    });
+  }
+
+  const darkModeEnabled = document.getElementById('dark-mode');
+  console.log(darkModeEnabled);
+  if (darkModeEnabled) {
+    darkModeEnabled.addEventListener('click', () => {
+      toggleTheme();
+    });
+  }
+};
+
 const init = () => {
   // Add listeners for feature buttons
   Array.from(document.getElementsByClassName('feature-button')).forEach((featureButton) => {
@@ -123,6 +168,8 @@ const init = () => {
     toggleFunctionAccordion(firstFeatureButton);
     toggleDisplayedFeature(firstFeatureButton);
   }
+
+  initSettingsMenu();
 };
 
 init();
